@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { multiply } from './components/utils';
 
 function App() {
   return (
@@ -22,5 +23,7 @@ function App() {
     </div>
   );
 }
+
+multiply()
 
 export default App;
