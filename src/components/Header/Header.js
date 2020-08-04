@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Header.css'
+import { PokeList, BackButton } from "../Rout"
 
 export class Header extends Component {
     render() {
@@ -11,7 +12,7 @@ export class Header extends Component {
                         <span>Pokedex</span>
                     </div>
                     <div className="header-block_nav">
-                        <span>PokeList</span>
+                        <PokeList />
                     </div>
                     <div className="header-block_search">
                         Search
