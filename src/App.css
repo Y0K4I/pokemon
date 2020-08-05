@@ -30,6 +30,16 @@
   width: 100px;
 }
 
+.header-block_logo a {
+  opacity: 0.8;
+}
+
+.header-block_logo a:hover {
+  border-bottom: 2px solid;
+  opacity: 1;
+  color: #ffffff;
+}
+
 .header-block_logo img {
   height: 75px;
 }
@@ -37,6 +47,22 @@
 .header-block_logo span {
   font-family: 'Montserrat', sans-serif;
   font-size: 24px;
+  color: #ffffff;
+}
+
+.header-block_nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.header-block_nav a {
+  opacity: 0.8;
+}
+
+.header-block_nav a:hover {
+  border-bottom: 2px solid;
+  opacity: 1;
   color: #ffffff;
 }
 
@@ -59,5 +85,15 @@ body {
   margin: 0 auto;
   padding: 0;
   background-color: #C9C7C7;
+}
+
+body .app {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 /*# sourceMappingURL=App.css.map */

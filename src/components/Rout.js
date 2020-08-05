@@ -17,6 +17,6 @@ export class BackButton extends Component {
     }
 
     render() {
-      return (<a  onClick={(e) => this.onclick(e)}>Back</a>);
+      return (<a  onClick={(e) => this.onclick(e)}><span>Pokedex</span></a>);
     }
   }

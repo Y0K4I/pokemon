@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import Header from '../Header/Header'
+import Cards from '../Card/Cards'
 
 class Poke_list extends Component {
     render() {
         return (
-        <div className="poke-list">
-            asdasd
+        <div className="app">
+           <Header />
+           <Cards />
         </div>
         )
     }

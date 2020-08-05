@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import './Header.css'
 import { PokeList, BackButton } from "../Rout"
 
-export class Header extends Component {
+class Header extends Component {
     render() {
         return (
            <header className="header">
                 <div className="header-block">
                     <div className="header-block_logo">
                         <img src="logo.jpg" alt="logo"></img>
-                        <span>Pokedex</span>
+                        <BackButton />
                     </div>
                     <div className="header-block_nav">
                         <PokeList />
@@ -21,4 +21,7 @@ export class Header extends Component {
            </header>
         )
     }
+
 }
+
+export default Header
