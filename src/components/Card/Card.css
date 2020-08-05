@@ -31,13 +31,28 @@
   border: 1px solid;
   width: 200px;
   height: 200px;
-  margin: 25px 0px 25px 25px;
+  margin: 19px;
 }
 
 .cards-block_card-top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
   height: 50px;
   width: 100%;
   background-color: #d5d5d5;
+}
+
+.cards-block_card-top_index {
+  width: 50px;
+}
+
+.cards-block_card-top_name {
+  width: 150px;
 }
 
 .cards-block_card-bottom {
