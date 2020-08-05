@@ -25,7 +25,7 @@ class Cards_block extends Component {
                         key={pokemon.name}
                     />
                 ))}
-            </div>) : (<h1>Wait!</h1>)}
+            </div>) : (<h2>Wait!</h2>)}
             </div>
         );
     }
