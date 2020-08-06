@@ -22,7 +22,7 @@ export default class Pokemon extends Component {
     render() {
         return (
             <div className="app">
-                <h1>{this.state.name} test</h1>
+                <h1>{this.state.name}</h1>
             </div>
         )
     }

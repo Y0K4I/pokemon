@@ -16,7 +16,7 @@ ReactDOM.render(
       <HashRouter>
         <Route exact path="/" component={App} />
         <Route exact path="/PokeList" component={Poke_list} />
-        <Route exact path="/PokeList/pokemon/:PokemonIndex" component={Pokemon} />
+        <Route exact path="/PokeList/pokemon/:pokemonIndex" component={Pokemon} />
       </HashRouter>
     </Provider>,
   document.getElementById('root')
