@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import './Card.css';
 import styled from 'styled-components';
+import loading from './loading.gif';
+import { Link } from 'react-router-dom'
 
 const Sprite = styled.img`
-    width: 100px;
-    height: 100px;
+    width: 125px;
+    height: 125px;
+    display: none;
+`;
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: black;
 `;
 
 class Card extends Component {
@@ -33,22 +41,38 @@ class Card extends Component {
     render() {
         
         return (
-            <div className="cards-block_card">
-                <div className="cards-block_card-top">
-                    <div className="cards-block_card-top_index">{this.state.pokemonIndex}</div>
-                    <div className="cards-block_card-top_name">{this.state.name.toLowerCase().split(' ').map(letter => letter.charAt(0).toUpperCase() + letter.substring(1))
-                    .join(' ')}</div>
+            <StyledLink to={`pokemon/${this.state.pokemonIndex}`}>
+                <div className="cards-block_card">
+                    <div className="cards-block_card-top">
+                        <div className="cards-block_card-top_index">{this.state.pokemonIndex}</div>
+                        <div className="cards-block_card-top_name">{this.state.name.toLowerCase().split(' ').map(letter => letter.charAt(0).toUpperCase() + letter.substring(1))
+                        .join(' ')}</div>
+                    </div>
+                    <div className="cards-block_card-bottom">
+                        {this.state.imgLoading ? (
+                            <img src={loading} 
+                            style={{ 
+                                height: '150px',
+                                width: '100%'
+                            }}>
+                            </img>
+                        ): null}
+                        <Sprite 
+                        className="cards-block_card-bottom_img" 
+                        src={this.state.imgUrl}
+                        onLoad={() => this.setState({imgLoading: false})}
+                        onError={() => this.setState({toManyRequests: true})}
+                        style={
+                            this.state.toManyRequests ? { display: "none" } :
+                            this.state.imgLoading ? null : {display: "block" }
+                        }
+                        />
+                        {this.state.toManyRequests ? (<div className="error">
+                            <span className="error-text">Too many requests!</span>
+                            </div>) : null}
+                    </div>
                 </div>
-                <div className="cards-block_card-bottom">
-                    <Sprite 
-                    className="cards-block_card-bottom_img" 
-                    src={this.state.imgUrl}
-                    onLoad={() => this.setState({imgLoading: false})}
-                    onError={() => this.setState({toManyRequests: true})}
-                    />
-                    
-                </div>
-            </div>
+            </StyledLink>
         )
     }
 }

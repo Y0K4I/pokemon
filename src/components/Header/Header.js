@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './Header.css'
-import { PokeList, BackButton } from "../Rout"
+import { PokeList, Pokedex } from "../Rout"
 
 class Header extends Component {
     render() {
@@ -9,7 +9,7 @@ class Header extends Component {
                 <div className="header-block">
                     <div className="header-block_logo">
                         <img src="logo.jpg" alt="logo"></img>
-                        <BackButton />
+                        <Pokedex />
                     </div>
                     <div className="header-block_nav">
                         <PokeList />

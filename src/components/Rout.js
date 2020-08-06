@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 
 export class PokeList extends Component {
     onclick () {
@@ -11,7 +10,7 @@ export class PokeList extends Component {
     }
   }
 
-export class BackButton extends Component {
+export class Pokedex extends Component {
     onclick () {
       window.location.assign('http://localhost:3000/');
     }
