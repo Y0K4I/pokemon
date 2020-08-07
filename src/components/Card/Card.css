@@ -71,7 +71,7 @@
           align-items: center;
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
-  width: 40px;
+  width: 37px;
   height: 25px;
 }
 
@@ -82,10 +82,10 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  width: 150px;
+  width: 153px;
   height: 25px;
   font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
+  font-size: 11px;
 }
 
 .cards-block_card-bottom {
