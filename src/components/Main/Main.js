@@ -6,9 +6,6 @@ export class Main extends Component {
         return (
             <div className="main">
                 <div className="main-block">
-                    <div className="main-block_display">
-
-                    </div>
                     <div className="main-block_buttons">
                         <button className="main-block_buttons_button">Prev</button>
                         <button className="main-block_buttons_button">More info</button>
