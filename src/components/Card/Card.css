@@ -76,6 +76,7 @@
 }
 
 .cards-block_card-top_name {
+  margin-top: 1px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
