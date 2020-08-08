@@ -3,6 +3,27 @@ import './Pokemon.css';
 import Header from '../Header/Header'
 import axios from 'axios';
 
+const TypesStyles = {
+    bug: '839209',
+    dark: '503D2F',
+    dragon: '7460DD',
+    electric: 'FABF26',
+    fairy: 'F5C1F4',
+    fighting: '84361E',
+    fire: 'D43308',
+    flying: '6075D2',
+    ghost: '59599F',
+    grass: '83C44E',
+    ground: 'CDAB54',
+    ice: '6FD2F4',
+    normal: '34290A',
+    poison: '8F4595',
+    psychic: 'DB3164',
+    rock: '9E863C',
+    steel: '7B7B87',
+    water: '0D67C1'
+}
+
 export default class Pokemon extends Component {
     state = {
         name: '',
@@ -72,10 +93,12 @@ export default class Pokemon extends Component {
                                 </div>
                                 <div className="display-block-pokemon_data_name">
                                     <span className="display-block-pokemon_data_name-idx">{this.state.pokemonIndex}</span>
-                                    <span className="display-block-pokemon_data_name-name">{this.state.name}</span>
-                                    <span className="display-block-pokemon_data_name-types">{this.state.types.map(type => {
-                                        
-                                    })}</span>
+                                    <span className="display-block-pokemon_data_name-name">{this.state.name.toLowerCase().split(' ').map(letter => letter.charAt(0).toUpperCase() 
+                                    + letter.substring(1)).join(' ')}</span>
+                                    {this.state.types.map(type => (
+                                        <span className="display-block-pokemon_data_name-type" 
+                                        style={{backgroundColor: `#${TypesStyles[type]}`, color: 'white'}}>{type}</span>
+                                    ))}
                                 </div>
                             </div>
                             <div className="display-block-pokemon_stats">
