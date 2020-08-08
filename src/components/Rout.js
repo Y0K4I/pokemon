@@ -12,7 +12,7 @@ export class PokeList extends Component {
 
 export class Pokedex extends Component {
     onclick () {
-      window.location.assign('http://localhost:3000/');
+      window.location.assign('http://localhost:3000/#/PokeList/pokemon/1');
     }
 
     render() {
