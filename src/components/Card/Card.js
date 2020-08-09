@@ -5,8 +5,8 @@ import loading from './loading.gif';
 import { Link } from 'react-router-dom'
 
 const Sprite = styled.img`
-    width: 125px;
-    height: 125px;
+    width: 150px;
+    height: 150px;
     display: none;
 `;
 

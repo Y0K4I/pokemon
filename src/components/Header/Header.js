@@ -8,13 +8,9 @@ function Header() {
     const [pokemon, setPokemon] = useState("pikachu");
 
     const getPokemon = async () => {
-        try {
-            const url = `https://pokeapi.co/api/v2/pokemon?limit=964/${pokemon}`;
-            const res = await axios.get(url)
-            console.log(res);
-        } catch (e) {
-            console.log(e);
-        }
+        const url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
+        const res = await axios.get(url)
+        console.log(res);
     }
 
     useEffect(() => {
