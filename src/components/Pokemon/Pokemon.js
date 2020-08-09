@@ -96,7 +96,7 @@ export default class Pokemon extends Component {
                                     <span className="display-block-pokemon_data_name-name">{this.state.name.toLowerCase().split(' ').map(letter => letter.charAt(0).toUpperCase() 
                                     + letter.substring(1)).join(' ')}</span>
                                     {this.state.types.map(type => (
-                                        <span className="display-block-pokemon_data_name-type" 
+                                        <span className="display-block-pokemon_data_name-type" key={type}
                                         style={{backgroundColor: `#${TypesStyles[type]}`, color: 'white'}}>{type}</span>
                                     ))}
                                 </div>

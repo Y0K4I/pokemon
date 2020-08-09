@@ -2,23 +2,27 @@ import React, { useState, useEffect } from 'react';
 import './Header.css'
 import { PokeList, Pokedex } from "../Rout"
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
-function Header() {
-    const [inputValue, setInputValue] = useState('');
-    const [pokemon, setPokemon] = useState("pikachu");
+export default function Header() {
+    const [pokemon, setPokemon] = useState('');
+    const [pokeId, setPokeId] = useState('');
+
+    const url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
 
     const getPokemon = async () => {
-        const url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
         const res = await axios.get(url)
+        setPokeId(res.data.id)
         console.log(res);
     }
 
-    useEffect(() => {
-        getPokemon()
-    }, [])
-
     const getInput = (e) => {
-        setInputValue(e.target.value.toLowerCase())
+        setPokemon(e.target.value.toLowerCase())
+    }
+
+    const findPokemon = (e) => {
+        e.preventDefault()
+        getPokemon()
     }
 
     return (
@@ -37,11 +41,10 @@ function Header() {
                             <input onChange={getInput}></input>
                         </label>
                     </form>
+                    <button onClick={findPokemon}>find</button>
                 </div>
             </div>
         </header>
         )
 
 }
-
-export default Header
