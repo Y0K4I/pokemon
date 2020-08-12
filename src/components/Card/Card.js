@@ -29,7 +29,7 @@ export default function Card({name, url}) {
     // 
         
     return (
-        <StyledLink to={`pokemon/${pokemonIndex}`}>
+        <StyledLink to={`/PokeList/pokemon/${pokemonIndex}`}>
             <div className="cards-block_card">
                 <div className="cards-block_card-top">
                     <div className="cards-block_card-top_index">{pokemonIndex}</div>
@@ -40,7 +40,7 @@ export default function Card({name, url}) {
                     {imgLoading ? (
                         <img src={loading} 
                         style={{ 
-                            height: '150px',
+                            height: '179px',
                             width: '100%'
                         }}>
                         </img>

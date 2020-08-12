@@ -1,15 +1,18 @@
 import axios from "axios"
 
 export const url = `https://pokeapi.co/api/v2/pokemon/`
+export const urlAll = `https://pokeapi.co/api/v2/pokemon?limit=964`
 export const urlLimited = `https://pokeapi.co/api/v2/pokemon?`
 
-export function apiGet(){
-    axios.get(url).then(result=>{
-        console.log(result)
-    })
+export async function apiGet() {
+    return(await axios.get(url))
 }
 
-export function apiGetId(pokemonId){
+export async function apiGetAll() {
+    return(await axios.get(urlAll))
+}
+
+export function apiGetId(pokemonId) {
     axios.get(url+pokemonId).then(result=>{
         console.log(result)
     })
