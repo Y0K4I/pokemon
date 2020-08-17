@@ -2,28 +2,33 @@ import React, { useState, useEffect } from 'react';
 import './Header.css'
 import { PokeList, Pokedex } from "../Rout"
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { createStore } from 'redux';
+import {rootReducer} from '../redux/rootReducer'
+import { url, apiGet } from '../redux/apiGet'
+
+const store = createStore(rootReducer)
 
 export default function Header() {
     const [pokemon, setPokemon] = useState('');
     const [pokeId, setPokeId] = useState('');
 
-    const url = `https://pokeapi.co/api/v2/pokemon/${pokemon}`;
-
-    const getPokemon = async () => {
-        const res = await axios.get(url)
-        setPokeId(res.data.id)
-        console.log(res);
-    }
+    const newUrl = url + pokemon
 
     const getInput = (e) => {
         setPokemon(e.target.value.toLowerCase())
     }
 
-    const findPokemon = (e) => {
-        e.preventDefault()
-        getPokemon()
+    const findPokemon = async() => {
+    //    await axios.get(newUrl).then(result=>{
+    //         console.log(result);
+    //     })
+        // setPokeId(pokeId)
+       apiGet(pokemon)
     }
+    
+    // useEffect(() => {
+    // if(pokeId) window.location.assign(`http://localhost:3000/#/PokeList/pokemon/${pokeId}`)
+    // },[pokeId])
 
     return (
         <header className="header">
@@ -45,6 +50,5 @@ export default function Header() {
                 </div>
             </div>
         </header>
-        )
-
+    )
 }
