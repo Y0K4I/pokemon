@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import './Card.css';
 import Card from './Card';
-import { apiGetLimited, apiGetAll } from '../redux/apiGet';
+import { apiGetLimited } from '../redux/apiGet';
 import Pagination from '../Pagination/Pagination';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import ropeEnd from './img/rope-end.png'
 import ropeBody from './img/rope-body.png'
 
 export default function Cards_block() {
-    // let defaultLimit = 30
     const [limit, setLimit] = useState(10)
     const [offset, setOffset] = useState(0)
     const [pokemon, setPokemon] = useState([])
@@ -16,9 +15,7 @@ export default function Cards_block() {
     const [allPokemons, setAllPokemons] = useState('')
 
 
-    const getNewLimit = () => {
-        setLimit(limit+5)
-    }
+    const getNewLimit = () => setLimit(limit+5)
     
     useEffect(() => {
         apiGetLimited(limit, offset).then(result => {
@@ -74,11 +71,15 @@ const Rope = styled.div`
     display: flex;
     flex-direction: column;
 `
+const RopeAnimation = keyframes`
+    0% { height: 150px }
+    50% { height: 300px }
+    100% { height: 150p }
+`
+
 const RopeBody = styled.img`
     height: 150px;
     width: 10px;
     margin: 0px 0px 0px 15px;
-    @keyframes box {
-        from
-    }
+    animation: ${RopeAnimation} 2s
 `
