@@ -1,4 +1,4 @@
-import { SAVE_DATA_POKEMONS, SAVE_ALL_POKEMONS, SAVE_LIMIT, SAVE_OFFSET, SAVE_CURRENT_PAGE, SAVE_INPUT_VALUE, SAVE_POKEMON_INDEX } from "../actions/pokemons/types"
+import { SAVE_DATA_POKEMONS, SAVE_ALL_POKEMONS, SAVE_LIMIT, SAVE_OFFSET, SAVE_CURRENT_PAGE, SAVE_INPUT_VALUE, SAVE_POKEMON_INDEX, SAVE_IMG_URL } from "../actions/pokemons/types"
 
 const initialState = {
     pokemonsCount: 0,
@@ -7,7 +7,8 @@ const initialState = {
     pokemonsOffset: 0,
     pokemonsCurrentPage: 1,
     inputValue: '',
-    pokemonIndex: ''
+    pokemonIndex: '',
+    imgUrl: '',
 }
 
 export default function pokemonReducer(state = initialState, action) {
@@ -26,6 +27,8 @@ export default function pokemonReducer(state = initialState, action) {
             return {...state, inputValue: action.payload}
         case SAVE_POKEMON_INDEX:
             return {...state, pokemonIndex: action.payload}
+        case SAVE_IMG_URL: 
+            return {...state, imgUrl: action.payload}
         default:
             return state
     }

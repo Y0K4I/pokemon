@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import loading from './loading.gif';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { savePokemonIndex } from '../redux/actions/pokemons/actions';
+import { savePokemonIndex, saveImgUrl } from '../redux/actions/pokemons/actions';
 
 const Sprite = styled.img`
     width: 150px;
@@ -18,14 +18,13 @@ const StyledLink = styled(Link)`
 `;
 
 function Card({name, url, ...props}) {
-    const [imgUrl, setImgUrl] = useState('')
     const [imgLoading, setImgLoading] = useState(true)
     const [toManyRequests, setToManyRequests] = useState(false)
 
     useEffect(() => {
         props.savePokemonIndex(url.split("/")[url.split('/').length - 2])
         console.log(props.pokemons.pokemonIndex);
-        setImgUrl(`https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${props.pokemons.pokemonIndex}.png?raw=true`)
+        props.saveImgUrl(`https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${props.pokemons.pokemonIndex}.png?raw=true`)
     }, [props.pokemons.pokemonIndex])
 
     // 
@@ -49,7 +48,7 @@ function Card({name, url, ...props}) {
                     ): null}
                     <Sprite 
                     className="cards-block_card-bottom_img" 
-                    src={imgUrl}
+                    src={props.pokemons.imgUrl}
                     onLoad={() => setImgLoading(false)}
                     onError={() => setToManyRequests(true)}
                     style={
@@ -74,6 +73,7 @@ export default connect(
         }
     },
     dispatch => ({
-        savePokemonIndex: data => dispatch(savePokemonIndex(data))
+        savePokemonIndex: data => dispatch(savePokemonIndex(data)),
+        saveImgUrl: data => dispatch(saveImgUrl(data)),
     })
 )(Card)

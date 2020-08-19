@@ -1,4 +1,5 @@
-import { SAVE_DATA_POKEMONS, SAVE_ALL_POKEMONS, SAVE_LIMIT, SAVE_OFFSET, SAVE_CURRENT_PAGE, SAVE_INPUT_VALUE, SAVE_POKEMON_INDEX } from './types'
+import { SAVE_DATA_POKEMONS, SAVE_ALL_POKEMONS, SAVE_LIMIT, SAVE_OFFSET, SAVE_CURRENT_PAGE, SAVE_INPUT_VALUE, 
+    SAVE_POKEMON_INDEX, SAVE_IMG_URL} from './types'
 
 export function savePokemons(data) {
     return {
@@ -42,9 +43,16 @@ export function saveInputValue(data) {
     }
 }
 
-export function savePokemonIndex (data) {
+export function savePokemonIndex(data) {
     return {
         type: SAVE_POKEMON_INDEX,
+        payload: data
+    }
+}
+
+export function saveImgUrl(data) {
+    return {
+        type: SAVE_IMG_URL,
         payload: data
     }
 }

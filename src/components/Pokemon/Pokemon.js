@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import './Pokemon.css';
 import Header from '../Header/Header'
 import axios from 'axios';
+import { createStore } from 'redux';
+import pokemonReducer from '../redux/reducers/pokemonReducer';
+import { connect } from 'react-redux';
+
+const store = createStore(pokemonReducer)
 
 const TypesStyles = {
     bug: '839209',
@@ -24,95 +29,104 @@ const TypesStyles = {
     water: '0D67C1'
 }
 
-export default class Pokemon extends Component {
-    state = {
-        name: '',
-        imgUrl: '',
-        pokemonIndex: '',
-        stats: {
-          hp: "",
-          attack: "",
-          defense: "",
-          specialAttack: "",
-          specialDefense: "",
-          speed: "",
-        },
-        types: [],
-    };
+function Pokemon(props) {
 
-    async componentDidMount() {
-        const { pokemonIndex }  = this.props.match.params;
-        const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonIndex}/`;
-        const pokemonSpeciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonIndex}/`;
+    // state = {
+    //     name: '',
+    //     imgUrl: '',
+    //     pokemonIndex: '',
+    //     stats: {
+    //       hp: "",
+    //       attack: "",
+    //       defense: "",
+    //       specialAttack: "",
+    //       specialDefense: "",
+    //       speed: "",
+    //     },
+    //     types: [],
+    // };
 
-        const pokemonResponse = await axios.get(pokemonUrl);
+    // async componentDidMount() {
+    //     const { pokemonIndex }  = this.props.match.params;
+    //     const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonIndex}/`;
+    //     const pokemonSpeciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonIndex}/`;
 
-        const name = pokemonResponse.data.name;
-        const imgUrl = pokemonResponse.data.sprites.front_default;
+    //     const pokemonResponse = await axios.get(pokemonUrl);
 
-        let { hp, attack, defense, specialAttack, specialDefense, speed } = '';
+    //     const name = pokemonResponse.data.name;
+    //     const imgUrl = pokemonResponse.data.sprites.front_default;
 
-        pokemonResponse.data.stats.map(stat => {
-            switch (stat.stat.name) {
-                case 'hp':
-                    hp = stat.base_stat;
-                    break;
-                case 'attack':
-                    attack = stat.base_stat;
-                    break;
-                case 'defense':
-                    defense = stat.base_stat;
-                    break;
-                case 'special-attack':
-                    specialAttack = stat.base_stat;
-                    break;
-                case 'special-defense':
-                    specialDefense = stat.base_stat;
-                    break;
-                case 'speed':
-                    speed = stat.base_stat;
-                    break;
-            }
-        })
+    //     let { hp, attack, defense, specialAttack, specialDefense, speed } = '';
 
-        const types = pokemonResponse.data.types.map(type => type.type.name)
+    //     pokemonResponse.data.stats.map(stat => {
+    //         switch (stat.stat.name) {
+    //             case 'hp':
+    //                 hp = stat.base_stat;
+    //                 break;
+    //             case 'attack':
+    //                 attack = stat.base_stat;
+    //                 break;
+    //             case 'defense':
+    //                 defense = stat.base_stat;
+    //                 break;
+    //             case 'special-attack':
+    //                 specialAttack = stat.base_stat;
+    //                 break;
+    //             case 'special-defense':
+    //                 specialDefense = stat.base_stat;
+    //                 break;
+    //             case 'speed':
+    //                 speed = stat.base_stat;
+    //                 break;
+    //         }
+    //     })
 
-        this.setState({ name, imgUrl, pokemonIndex, hp, attack, defense, specialAttack, specialDefense, speed, types })
-    }
+    //     const types = pokemonResponse.data.types.map(type => type.type.name)
 
-    render() {
-        return (
-            <div className="app">
-                <Header />
-                <div className="display">
-                    <div className="display-block">
-                        <div className="display-block-pokemon">
-                            <div className="display-block-pokemon_data">
-                                <div className="display-block-pokemon_data_img">
-                                    <img src={this.state.imgUrl}></img>
-                                </div>
-                                <div className="display-block-pokemon_data_name">
-                                    <span className="display-block-pokemon_data_name-idx">{this.state.pokemonIndex}</span>
-                                    <span className="display-block-pokemon_data_name-name">{this.state.name.toLowerCase().split(' ').map(letter => letter.charAt(0).toUpperCase() 
-                                    + letter.substring(1)).join(' ')}</span>
-                                    {this.state.types.map(type => (
-                                        <span className="display-block-pokemon_data_name-type" key={type}
-                                        style={{backgroundColor: `#${TypesStyles[type]}`, color: 'white'}}>{type}</span>
-                                    ))}
-                                </div>
+    //     this.setState({ name, imgUrl, pokemonIndex, hp, attack, defense, specialAttack, specialDefense, speed, types })
+    // }
+
+    return (
+        <div className="app">
+            <Header />
+            <div className="display">
+                <div className="display-block">
+                    <div className="display-block-pokemon">
+                        <div className="display-block-pokemon_data">
+                            <div className="display-block-pokemon_data_img">
+                                <img src={props.pokemons.imgUrl}></img>
                             </div>
-                            <div className="display-block-pokemon_stats">
-                                HP: {this.state.hp}<br />
-                                Attack: {this.state.attack}<br />
-                                Defense: {this.state.defense}<br />
-                                Sp Attack: {this.state.specialAttack}<br />
-                                Sp Defense: {this.state.specialDefense} <br />
-                                Speed: {this.state.speed}
+                            <div className="display-block-pokemon_data_name">
+                                <span className="display-block-pokemon_data_name-idx">{props.pokemons.pokemonIndex}</span>
+                                <span className="display-block-pokemon_data_name-name">{this.state.name.toLowerCase().split(' ').map(letter => letter.charAt(0).toUpperCase() 
+                                + letter.substring(1)).join(' ')}</span>
+                                {this.state.types.map(type => (
+                                    <span className="display-block-pokemon_data_name-type" key={type}
+                                    style={{backgroundColor: `#${TypesStyles[type]}`, color: 'white'}}>{type}</span>
+                                ))}
                             </div>
+                        </div>
+                        <div className="display-block-pokemon_stats">
+                            HP: {this.state.hp}<br />
+                            Attack: {this.state.attack}<br />
+                            Defense: {this.state.defense}<br />
+                            Sp Attack: {this.state.specialAttack}<br />
+                            Sp Defense: {this.state.specialDefense} <br />
+                            Speed: {this.state.speed}
                         </div>
                     </div>
                 </div>
             </div>
-        )
-    }
+        </div>
+    )
 }
+
+export default connect(
+    (state) => {
+        const {pokemons} = state
+        return {
+            pokemons
+        }
+    }
+
+)(Pokemon)
