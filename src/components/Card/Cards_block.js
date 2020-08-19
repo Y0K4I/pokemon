@@ -6,37 +6,37 @@ import Pagination from '../Pagination/Pagination';
 import styled, { keyframes } from 'styled-components';
 import ropeEnd from './img/rope-end.png'
 import ropeBody from './img/rope-body.png'
+import { connect } from 'react-redux';
+import { createStore } from 'redux';
+import  pokemonReducer  from '../redux/reducers/pokemonReducer';
+import { savePokemons, saveAllPokemons, saveLimit, saveOffset, saveCurrentPage } from '../redux/actions/pokemons/actions';
 
-export default function Cards_block() {
-    const [limit, setLimit] = useState(10)
-    const [offset, setOffset] = useState(0)
-    const [pokemon, setPokemon] = useState([])
-    const [currentPage, setCurrentPage] = useState(1)
-    const [allPokemons, setAllPokemons] = useState('')
+const store = createStore(pokemonReducer)
 
-
-    const getNewLimit = () => setLimit(limit+5)
-    
+function Cards_block(props) {
+    const getNewLimit = () => props.saveLimit(props.pokemons.pokemonsLimit + 5)
+     
     useEffect(() => {
-        apiGetLimited(limit, offset).then(result => {
-            setPokemon(result.data.results)
-            setAllPokemons(result.data.count)
+        apiGetLimited(props.pokemons.pokemonsLimit, props.pokemons.pokemonsOffset).then(result => {
+            if(result.data.results.length === props.pokemons.pokemonsLimit)
+            props.savePokemons(result.data.results)
+            props.saveAllPokemons(result.data.count) 
         })
-        if(currentPage)
-        setOffset(currentPage*limit-limit)
-    }, [offset, limit, currentPage])
+        if(props.pokemons.pokemonsCurrentPage)
+        props.saveOffset(props.pokemons.pokemonsCurrentPage*props.pokemons.pokemonsLimit-props.pokemons.pokemonsLimit)
+    }, [props.pokemons.pokemonsOffset, props.pokemons.pokemonsLimit, props.pokemons.pokemonsCurrentPage])
 
-    const paginate = (pageNumber) =>  setCurrentPage(pageNumber)
+    const paginate = (pageNumber) =>  props.saveCurrentPage(pageNumber)
 
-    const nextPage = currentPage+1
-    const prevPage = currentPage-1
+    const nextPage = props.pokemons.pokemonsCurrentPage + 1
+    const prevPage = props.pokemons.pokemonsCurrentPage - 1
 
     return(
         <div>
             <Block>
-                {!!pokemon.length}
-                {!!pokemon.length ? (<div className="cards-block">
-                {pokemon.map(pokemon => (
+                {!!props.pokemons.pokemons.length}
+                {!!props.pokemons.pokemons.length ? (<div className="cards-block">
+                {props.pokemons.pokemons.map(pokemon => (
                     <Card 
                         name={pokemon.name} 
                         url={pokemon.url}
@@ -52,16 +52,32 @@ export default function Cards_block() {
             </Rope>
             </Block>
             <Pagination
-                currentPage={currentPage}
-                pokemonsPerPage={limit}
-                totalPokemons = {!!allPokemons ? allPokemons : 0}
-                paginate={paginate}
+                currentPage={props.pokemons.pokemonsCurrentPage}
+                pokemonsPerPage={props.pokemons.pokemonsLimit}
+                totalPokemons = {!!props.pokemons.pokemonsCount ? props.pokemons.pokemonsCount : 0}
+                paginate={paginate} 
                 nextPage={nextPage}
                 prevPage={prevPage}
             />
         </div>
     );
 }
+
+export default connect(
+    (state) => {
+        const {pokemons} = state
+        return{
+            pokemons
+        }
+    },
+    dispatch => ({
+        savePokemons: data => dispatch(savePokemons(data)),
+        saveAllPokemons: data => dispatch(saveAllPokemons(data)),
+        saveLimit: data => dispatch(saveLimit(data)),
+        saveOffset: data => dispatch(saveOffset(data)),
+        saveCurrentPage: data => dispatch(saveCurrentPage(data))
+    })
+)(Cards_block)
 
 const Block = styled.div`
     display: flex;
@@ -74,7 +90,7 @@ const Rope = styled.div`
 const RopeAnimation = keyframes`
     0% { height: 150px }
     50% { height: 300px }
-    100% { height: 150p }
+    100% { height: 150px }
 `
 
 const RopeBody = styled.img`

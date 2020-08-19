@@ -1,1 +1,0 @@
-export const GET_API_URL = 'GETAPIURL' // default url

@@ -1,0 +1,2 @@
+export const SAVE_PAGE_NUMBERS = 'SAVE__PAGE__NUMBERS'
+export const SAVE_TOTAL_PAGES = 'SAVE__TOTAL__PAGES'

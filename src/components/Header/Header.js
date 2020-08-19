@@ -1,34 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import './Header.css'
 import { PokeList, Pokedex } from "../Rout"
-import axios from 'axios';
 import { createStore } from 'redux';
-import {rootReducer} from '../redux/rootReducer'
-import { url, apiGet } from '../redux/apiGet'
+import pokemonReducer from '../redux/reducers/pokemonReducer'
+import { connect } from 'react-redux';
+import { saveInputValue } from '../redux/actions/pokemons/actions';
+import { apiGet } from '../redux/apiGet';
 
-const store = createStore(rootReducer)
 
-export default function Header() {
-    const [pokemon, setPokemon] = useState('');
-    const [pokeId, setPokeId] = useState('');
-
-    const newUrl = url + pokemon
+function Header(props) {
+    const [pokeId, setPokeId] = useState(1)
 
     const getInput = (e) => {
-        setPokemon(e.target.value.toLowerCase())
+        props.saveInputValue(e.target.value.toLowerCase())
     }
 
-    const findPokemon = async() => {
-    //    await axios.get(newUrl).then(result=>{
-    //         console.log(result);
-    //     })
-        // setPokeId(pokeId)
-       apiGet(pokemon)
+    const findPokemon = () => {
+        window.location.assign(`http://localhost:3000/#/PokeList/pokemon/${props.pokemons.inputValue}`)
     }
-    
-    // useEffect(() => {
-    // if(pokeId) window.location.assign(`http://localhost:3000/#/PokeList/pokemon/${pokeId}`)
-    // },[pokeId])
 
     return (
         <header className="header">
@@ -52,3 +41,15 @@ export default function Header() {
         </header>
     )
 }
+
+export default connect(
+    (state) => {
+        const {pokemons} = state
+        return {
+            pokemons
+        }
+    },
+    dispatch => ({
+        saveInputValue: data => dispatch(saveInputValue(data)),
+    })
+)(Header)

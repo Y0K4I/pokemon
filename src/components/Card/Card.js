@@ -3,6 +3,8 @@ import './Card.css';
 import styled from 'styled-components';
 import loading from './loading.gif';
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux';
+import { savePokemonIndex } from '../redux/actions/pokemons/actions';
 
 const Sprite = styled.img`
     width: 150px;
@@ -15,24 +17,24 @@ const StyledLink = styled(Link)`
     color: black;
 `;
 
-export default function Card({name, url}) {
+function Card({name, url, ...props}) {
     const [imgUrl, setImgUrl] = useState('')
-    const [pokemonIndex, setPokemonIndex] = useState('')
     const [imgLoading, setImgLoading] = useState(true)
     const [toManyRequests, setToManyRequests] = useState(false)
 
     useEffect(() => {
-        setPokemonIndex(url.split("/")[url.split('/').length - 2])
-        setImgUrl(`https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${pokemonIndex}.png?raw=true`)
-    })
+        props.savePokemonIndex(url.split("/")[url.split('/').length - 2])
+        console.log(props.pokemons.pokemonIndex);
+        setImgUrl(`https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${props.pokemons.pokemonIndex}.png?raw=true`)
+    }, [props.pokemons.pokemonIndex])
 
     // 
         
     return (
-        <StyledLink to={`/PokeList/pokemon/${pokemonIndex}`}>
+        <StyledLink to={`/PokeList/pokemon/${props.pokemons.pokemonIndex}`} >
             <div className="cards-block_card">
                 <div className="cards-block_card-top">
-                    <div className="cards-block_card-top_index">{pokemonIndex}</div>
+                    <div className="cards-block_card-top_index">{props.pokemons.pokemonIndex}</div>
                     <div className="cards-block_card-top_name">{name.toLowerCase().split(' ').map(letter => letter.charAt(0).toUpperCase() + letter.substring(1))
                     .join(' ')}</div>
                 </div>
@@ -63,3 +65,15 @@ export default function Card({name, url}) {
         </StyledLink>
     )
 }
+
+export default connect(
+    (state) => {
+        const {pokemons} = state
+        return {
+            pokemons
+        }
+    },
+    dispatch => ({
+        savePokemonIndex: data => dispatch(savePokemonIndex(data))
+    })
+)(Card)
