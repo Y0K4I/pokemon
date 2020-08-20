@@ -1,4 +1,7 @@
-import { SAVE_DATA_POKEMONS, SAVE_ALL_POKEMONS, SAVE_LIMIT, SAVE_OFFSET, SAVE_CURRENT_PAGE, SAVE_INPUT_VALUE, SAVE_POKEMON_INDEX, SAVE_IMG_URL } from "../actions/pokemons/types"
+import { SAVE_DATA_POKEMONS, SAVE_ALL_POKEMONS, SAVE_LIMIT, SAVE_OFFSET, SAVE_CURRENT_PAGE, SAVE_INPUT_VALUE, SAVE_IMG_URL, 
+    SAVE_POKEMON_NAME, 
+    SAVE_POKEMON_TYPES} from "../actions/pokemons/types"
+import { act } from "react-dom/test-utils"
 
 const initialState = {
     pokemonsCount: 0,
@@ -7,8 +10,9 @@ const initialState = {
     pokemonsOffset: 0,
     pokemonsCurrentPage: 1,
     inputValue: '',
-    pokemonIndex: '',
     imgUrl: '',
+    pokemonName: '',
+    pokemonTypes: [],
 }
 
 export default function pokemonReducer(state = initialState, action) {
@@ -25,10 +29,12 @@ export default function pokemonReducer(state = initialState, action) {
             return {...state, pokemonsCurrentPage: action.payload}
         case SAVE_INPUT_VALUE:
             return {...state, inputValue: action.payload}
-        case SAVE_POKEMON_INDEX:
-            return {...state, pokemonIndex: action.payload}
         case SAVE_IMG_URL: 
             return {...state, imgUrl: action.payload}
+        case SAVE_POKEMON_NAME:
+            return {...state, pokemonName: action.payload}
+        case SAVE_POKEMON_TYPES:
+            return {...state, pokemonTypes: action.payload}
         default:
             return state
     }

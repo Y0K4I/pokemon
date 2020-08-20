@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import loading from './loading.gif';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { savePokemonIndex, saveImgUrl } from '../redux/actions/pokemons/actions';
+import { saveImgUrl } from '../redux/actions/pokemons/actions';
 
 const Sprite = styled.img`
     width: 150px;
@@ -17,23 +17,23 @@ const StyledLink = styled(Link)`
     color: black;
 `;
 
-function Card({name, url, ...props}) {
+function Card({name, url, index, ...props}) {
+    const [imgUrl, setImgUrl] = useState('')
     const [imgLoading, setImgLoading] = useState(true)
     const [toManyRequests, setToManyRequests] = useState(false)
 
     useEffect(() => {
-        props.savePokemonIndex(url.split("/")[url.split('/').length - 2])
-        console.log(props.pokemons.pokemonIndex);
-        props.saveImgUrl(`https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${props.pokemons.pokemonIndex}.png?raw=true`)
-    }, [props.pokemons.pokemonIndex])
+        setImgUrl(`https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${index}.png?raw=true`)
+        console.log(index);
+    }, [index])
 
     // 
         
     return (
-        <StyledLink to={`/PokeList/pokemon/${props.pokemons.pokemonIndex}`} >
+        <StyledLink to={`/PokeList/pokemon/${index}`}>
             <div className="cards-block_card">
                 <div className="cards-block_card-top">
-                    <div className="cards-block_card-top_index">{props.pokemons.pokemonIndex}</div>
+                    <div className="cards-block_card-top_index">{index}</div>
                     <div className="cards-block_card-top_name">{name.toLowerCase().split(' ').map(letter => letter.charAt(0).toUpperCase() + letter.substring(1))
                     .join(' ')}</div>
                 </div>
@@ -48,7 +48,7 @@ function Card({name, url, ...props}) {
                     ): null}
                     <Sprite 
                     className="cards-block_card-bottom_img" 
-                    src={props.pokemons.imgUrl}
+                    src={imgUrl}
                     onLoad={() => setImgLoading(false)}
                     onError={() => setToManyRequests(true)}
                     style={
@@ -73,7 +73,6 @@ export default connect(
         }
     },
     dispatch => ({
-        savePokemonIndex: data => dispatch(savePokemonIndex(data)),
         saveImgUrl: data => dispatch(saveImgUrl(data)),
     })
 )(Card)

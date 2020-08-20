@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Pokemon.css';
 import Header from '../Header/Header'
 import axios from 'axios';
 import { createStore } from 'redux';
 import pokemonReducer from '../redux/reducers/pokemonReducer';
 import { connect } from 'react-redux';
+import { apiGetPokemon } from '../redux/apiGet';
+import { savePokemonName, savePokemonTypes } from '../redux/actions/pokemons/actions';
 
 const store = createStore(pokemonReducer)
 
@@ -30,7 +32,14 @@ const TypesStyles = {
 }
 
 function Pokemon(props) {
+    const [{pokemonIndex}] = useState(props.match.params)
 
+    useEffect(() => {
+        apiGetPokemon(pokemonIndex).then(result => {
+            props.savePokemonName(result.data.name)
+        })
+    }, [pokemonIndex])
+    
     // state = {
     //     name: '',
     //     imgUrl: '',
@@ -47,7 +56,6 @@ function Pokemon(props) {
     // };
 
     // async componentDidMount() {
-    //     const { pokemonIndex }  = this.props.match.params;
     //     const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonIndex}/`;
     //     const pokemonSpeciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonIndex}/`;
 
@@ -85,6 +93,7 @@ function Pokemon(props) {
 
     //     this.setState({ name, imgUrl, pokemonIndex, hp, attack, defense, specialAttack, specialDefense, speed, types })
     // }
+    
 
     return (
         <div className="app">
@@ -97,22 +106,22 @@ function Pokemon(props) {
                                 <img src={props.pokemons.imgUrl}></img>
                             </div>
                             <div className="display-block-pokemon_data_name">
-                                <span className="display-block-pokemon_data_name-idx">{props.pokemons.pokemonIndex}</span>
-                                <span className="display-block-pokemon_data_name-name">{this.state.name.toLowerCase().split(' ').map(letter => letter.charAt(0).toUpperCase() 
+                                <span className="display-block-pokemon_data_name-idx">{pokemonIndex}</span>
+                                <span className="display-block-pokemon_data_name-name">{props.pokemons.pokemonName.toLowerCase().split(' ').map(letter => letter.charAt(0).toUpperCase() 
                                 + letter.substring(1)).join(' ')}</span>
-                                {this.state.types.map(type => (
+                                {props.pokemons.pokemonTypes.map(type => (
                                     <span className="display-block-pokemon_data_name-type" key={type}
                                     style={{backgroundColor: `#${TypesStyles[type]}`, color: 'white'}}>{type}</span>
                                 ))}
                             </div>
                         </div>
                         <div className="display-block-pokemon_stats">
-                            HP: {this.state.hp}<br />
-                            Attack: {this.state.attack}<br />
-                            Defense: {this.state.defense}<br />
-                            Sp Attack: {this.state.specialAttack}<br />
-                            Sp Defense: {this.state.specialDefense} <br />
-                            Speed: {this.state.speed}
+                            HP: <br />
+                            Attack: <br />
+                            Defense: <br />
+                            Sp Attack: <br />
+                            Sp Defense: <br />
+                            Speed: 
                         </div>
                     </div>
                 </div>
@@ -127,6 +136,9 @@ export default connect(
         return {
             pokemons
         }
-    }
-
+    },
+    dispatch => ({
+        savePokemonName: data => dispatch(savePokemonName(data)),
+        savePokemonTypes: data => dispatch(savePokemonTypes(data))
+    })
 )(Pokemon)

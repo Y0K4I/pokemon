@@ -9,7 +9,7 @@ import ropeBody from './img/rope-body.png'
 import { connect } from 'react-redux';
 import { createStore } from 'redux';
 import  pokemonReducer  from '../redux/reducers/pokemonReducer';
-import { savePokemons, saveAllPokemons, saveLimit, saveOffset, saveCurrentPage } from '../redux/actions/pokemons/actions';
+import { savePokemons, saveAllPokemons, saveLimit, saveOffset, saveCurrentPage} from '../redux/actions/pokemons/actions';
 
 const store = createStore(pokemonReducer)
 
@@ -20,11 +20,11 @@ function Cards_block(props) {
         apiGetLimited(props.pokemons.pokemonsLimit, props.pokemons.pokemonsOffset).then(result => {
             if(result.data.results.length === props.pokemons.pokemonsLimit)
             props.savePokemons(result.data.results)
-            props.saveAllPokemons(result.data.count) 
+            props.saveAllPokemons(result.data.count)
         })
         if(props.pokemons.pokemonsCurrentPage)
         props.saveOffset(props.pokemons.pokemonsCurrentPage*props.pokemons.pokemonsLimit-props.pokemons.pokemonsLimit)
-    }, [props.pokemons.pokemonsOffset, props.pokemons.pokemonsLimit, props.pokemons.pokemonsCurrentPage])
+    }, [props.pokemons.pokemonsOffset, props.pokemons.pokemonsLimit, props.pokemons.pokemonsCurrentPage], props.pokemons.pokemonIndex)
 
     const paginate = (pageNumber) =>  props.saveCurrentPage(pageNumber)
 
@@ -38,6 +38,7 @@ function Cards_block(props) {
                 {!!props.pokemons.pokemons.length ? (<div className="cards-block">
                 {props.pokemons.pokemons.map(pokemon => (
                     <Card 
+                        index={pokemon.url.split("/")[pokemon.url.split('/').length - 2]}
                         name={pokemon.name} 
                         url={pokemon.url}
                         key={pokemon.name}
@@ -75,7 +76,7 @@ export default connect(
         saveAllPokemons: data => dispatch(saveAllPokemons(data)),
         saveLimit: data => dispatch(saveLimit(data)),
         saveOffset: data => dispatch(saveOffset(data)),
-        saveCurrentPage: data => dispatch(saveCurrentPage(data))
+        saveCurrentPage: data => dispatch(saveCurrentPage(data)),
     })
 )(Cards_block)
 

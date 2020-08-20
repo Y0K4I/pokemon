@@ -5,8 +5,9 @@ import { createStore } from 'redux';
 import pokemonReducer from '../redux/reducers/pokemonReducer'
 import { connect } from 'react-redux';
 import { saveInputValue } from '../redux/actions/pokemons/actions';
-import { apiGet } from '../redux/apiGet';
+import { apiGet, apiGetPokemon } from '../redux/apiGet';
 
+const store = createStore(pokemonReducer)
 
 function Header(props) {
     const [pokeId, setPokeId] = useState(1)
@@ -15,8 +16,14 @@ function Header(props) {
         props.saveInputValue(e.target.value.toLowerCase())
     }
 
+    useEffect(() => {
+        apiGetPokemon(props.pokemons.inputValue).then(result => {
+            setPokeId(result.data.id)
+        })
+    }, [props.pokemons.inputValue])
+
     const findPokemon = () => {
-        window.location.assign(`http://localhost:3000/#/PokeList/pokemon/${props.pokemons.inputValue}`)
+        window.location.assign(`http://localhost:3000/#/PokeList/pokemon/${pokeId}`)
     }
 
     return (
