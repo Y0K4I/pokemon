@@ -65,14 +65,4 @@ function Card({name, url, index, ...props}) {
     )
 }
 
-export default connect(
-    (state) => {
-        const {pokemons} = state
-        return {
-            pokemons
-        }
-    },
-    dispatch => ({
-        saveImgUrl: data => dispatch(saveImgUrl(data)),
-    })
-)(Card)
+export default Card

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './Pokemon.css';
 import Header from '../Header/Header'
-import axios from 'axios';
 import { createStore } from 'redux';
 import pokemonReducer from '../redux/reducers/pokemonReducer';
 import { connect } from 'react-redux';
@@ -32,13 +31,14 @@ const TypesStyles = {
 }
 
 function Pokemon(props) {
-    const [{pokemonIndex}] = useState(props.match.params)
+    const pokeId = window.location.hash.split("/")[window.location.hash.split('/').length - 1]
+    const imgUrl = `https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${pokeId}.png?raw=true`
 
     useEffect(() => {
-        apiGetPokemon(pokemonIndex).then(result => {
+        apiGetPokemon(pokeId).then(result => {
             props.savePokemonName(result.data.name)
         })
-    }, [pokemonIndex])
+    }, [pokeId])
     
     // state = {
     //     name: '',
@@ -103,10 +103,10 @@ function Pokemon(props) {
                     <div className="display-block-pokemon">
                         <div className="display-block-pokemon_data">
                             <div className="display-block-pokemon_data_img">
-                                <img src={props.pokemons.imgUrl}></img>
+                                <img src={imgUrl}></img>
                             </div>
                             <div className="display-block-pokemon_data_name">
-                                <span className="display-block-pokemon_data_name-idx">{pokemonIndex}</span>
+                                <span className="display-block-pokemon_data_name-idx">{pokeId}</span>
                                 <span className="display-block-pokemon_data_name-name">{props.pokemons.pokemonName.toLowerCase().split(' ').map(letter => letter.charAt(0).toUpperCase() 
                                 + letter.substring(1)).join(' ')}</span>
                                 {props.pokemons.pokemonTypes.map(type => (

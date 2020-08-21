@@ -1,7 +1,6 @@
 import { SAVE_DATA_POKEMONS, SAVE_ALL_POKEMONS, SAVE_LIMIT, SAVE_OFFSET, SAVE_CURRENT_PAGE, SAVE_INPUT_VALUE, SAVE_IMG_URL, 
-    SAVE_POKEMON_NAME, 
-    SAVE_POKEMON_TYPES} from "../actions/pokemons/types"
-import { act } from "react-dom/test-utils"
+    SAVE_POKEMON_NAME, SAVE_POKEMON_TYPES} from "../actions/pokemons/types"
+
 
 const initialState = {
     pokemonsCount: 0,

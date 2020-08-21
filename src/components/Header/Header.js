@@ -5,7 +5,7 @@ import { createStore } from 'redux';
 import pokemonReducer from '../redux/reducers/pokemonReducer'
 import { connect } from 'react-redux';
 import { saveInputValue } from '../redux/actions/pokemons/actions';
-import { apiGet, apiGetPokemon } from '../redux/apiGet';
+import { apiGetPokemon } from '../redux/apiGet';
 
 const store = createStore(pokemonReducer)
 
