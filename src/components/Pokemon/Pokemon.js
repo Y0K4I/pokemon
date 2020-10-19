@@ -61,8 +61,7 @@ function Pokemon() {
             setSpeed(result.data.speed)
         })
 
-        window.location.assign(`http://localhost:3000/#/PokeList/pokemon/${pokeId}`);
-    }, [pokeId, window.location.hash])
+    }, [pokeId])
 
     
 
