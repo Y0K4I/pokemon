@@ -3,6 +3,7 @@ import './Card.css';
 import styled from 'styled-components';
 import loading from './loading.gif';
 import { Link } from 'react-router-dom'
+import {URL} from '../../url'
 
 const Sprite = styled.img`
     width: 150px;
@@ -25,7 +26,7 @@ function Card({name, url, index, ...props}) {
     }, [index])
         
     return (
-        <StyledLink to={`/PokeList/pokemon/${index}`}>
+        <StyledLink to={URL + `pokemon/${index}`}>
             <div className="cards-block_card">
                 <div className="cards-block_card-top">
                     <div className="cards-block_card-top_index">{index}</div>
