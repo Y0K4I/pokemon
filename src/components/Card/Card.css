@@ -133,4 +133,41 @@
   font-size: 13px;
   color: #ffffff;
 }
+
+@-webkit-keyframes rope-animation {
+  0% {
+    height: 150px;
+  }
+  50% {
+    height: 300px;
+  }
+  100% {
+    height: 150px;
+  }
+}
+
+@keyframes rope-animation {
+  0% {
+    height: 150px;
+  }
+  50% {
+    height: 300px;
+  }
+  100% {
+    height: 150px;
+  }
+}
+
+.rope-animated {
+  height: 150px;
+  width: 10px;
+  margin: 0px 0px 0px 15px;
+  -webkit-animation: rope-animation 2s;
+          animation: rope-animation 2s;
+}
+
+.rope-animated:hover {
+  -webkit-animation: rope-animation 2s;
+          animation: rope-animation 2s;
+}
 /*# sourceMappingURL=Card.css.map */

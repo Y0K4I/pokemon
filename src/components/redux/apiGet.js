@@ -1,16 +1,22 @@
 import axios from "axios"
 
-export const url = `https://pokeapi.co/api/v2/pokemon/`
-export const urlLimited = `https://pokeapi.co/api/v2/pokemon?`
-
-export async function apiGet() {
-    return(await axios.get(url))
-}
+export const url = `https://pokemonapishort.herokuapp.com/PokeApi/getPokemons`
+export const urlOfPokemon = `https://pokemonapishort.herokuapp.com/PokeApi/getStatOf/`
+export const urlOfCount = `https://pokemonapishort.herokuapp.com/PokeApi/getPokemonsCount`
+export const urlOfTypes = `https://pokemonapishort.herokuapp.com/PokeApi/getPokemonsTypes`
 
 export async function apiGetPokemon(pokeIdx) {
-    return(await axios.get(url+pokeIdx))
+    return axios.get(urlOfPokemon+pokeIdx)
 }
 
-export async function apiGetLimited(limit, offset){
-    return (await axios.get(urlLimited + `limit=${limit}&offset=${offset}`))
+export async function apiGetCount() {
+    return axios.get(urlOfCount)
+}
+
+export async function apiGetTypes() {
+    return axios.get(urlOfTypes)
+}
+
+export function apiGetLimited(limit, offset, filter){
+    return axios.post(url, {...filter, limit: limit, offset: offset})
 }

@@ -3,8 +3,6 @@ import './Card.css';
 import styled from 'styled-components';
 import loading from './loading.gif';
 import { Link } from 'react-router-dom'
-import { connect } from 'react-redux';
-import { saveImgUrl } from '../redux/actions/pokemons/actions';
 
 const Sprite = styled.img`
     width: 150px;
@@ -24,10 +22,7 @@ function Card({name, url, index, ...props}) {
 
     useEffect(() => {
         setImgUrl(`https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${index}.png?raw=true`)
-        console.log(index);
     }, [index])
-
-    // 
         
     return (
         <StyledLink to={`/PokeList/pokemon/${index}`}>

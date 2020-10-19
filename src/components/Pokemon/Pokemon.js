@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Pokemon.css';
 import Header from '../Header/Header'
 import { createStore } from 'redux';
 import pokemonReducer from '../redux/reducers/pokemonReducer';
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { apiGetPokemon } from '../redux/apiGet';
-import { savePokemonName, savePokemonTypes } from '../redux/actions/pokemons/actions';
+import { savePokemonName, saveImgUrl } from '../redux/actions/pokemons/actions';
 
 const store = createStore(pokemonReducer)
 
@@ -30,69 +31,39 @@ const TypesStyles = {
     water: '0D67C1'
 }
 
-function Pokemon(props) {
-    const pokeId = window.location.hash.split("/")[window.location.hash.split('/').length - 1]
-    const imgUrl = `https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${pokeId}.png?raw=true`
+function Pokemon() {
+    const [pokeId, setPokeId] = useState(window.location.hash.split("/")[window.location.hash.split('/').length - 1])
+    const [pokemonName, setPokemonName] = useState('')
+    const [imgUrl, setImgUrl] = useState('')
+    const [pokemonIndex, setPokemonIndex] = useState(0)
+    const [pokemonTypes, setPokemonTypes] = useState([1])
+    const [hp, setHp] = useState(0)
+    const [attack, setAttack] = useState(0)
+    const [defense, setDefense] = useState(0)
+    const [specialAttack, setSpecialAttack] = useState(0)
+    const [specialDefense, setSpecialDefense] = useState(0)
+    const [speed, setSpeed] = useState(0)
+
+    const currentId = Number(pokeId)
 
     useEffect(() => {
         apiGetPokemon(pokeId).then(result => {
-            props.savePokemonName(result.data.name)
+            console.log(result);
+            setPokemonIndex(result.data.id)
+            setImgUrl(`https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/${result.data.id}.png?raw=true`)
+            setPokemonName(result.data.name)
+            setPokemonTypes(result.data.types.map(type => type))
+            setHp(result.data.hp)
+            setAttack(result.data.attack)
+            setDefense(result.data.defense)
+            setSpecialAttack(result.data.specialAttack)
+            setSpecialDefense(result.data.specialDefense)
+            setSpeed(result.data.speed)
         })
-    }, [pokeId])
-    
-    // state = {
-    //     name: '',
-    //     imgUrl: '',
-    //     pokemonIndex: '',
-    //     stats: {
-    //       hp: "",
-    //       attack: "",
-    //       defense: "",
-    //       specialAttack: "",
-    //       specialDefense: "",
-    //       speed: "",
-    //     },
-    //     types: [],
-    // };
 
-    // async componentDidMount() {
-    //     const pokemonUrl = `https://pokeapi.co/api/v2/pokemon/${pokemonIndex}/`;
-    //     const pokemonSpeciesUrl = `https://pokeapi.co/api/v2/pokemon-species/${pokemonIndex}/`;
+        window.location.assign(`http://localhost:3000/#/PokeList/pokemon/${pokeId}`);
+    }, [pokeId, window.location.hash])
 
-    //     const pokemonResponse = await axios.get(pokemonUrl);
-
-    //     const name = pokemonResponse.data.name;
-    //     const imgUrl = pokemonResponse.data.sprites.front_default;
-
-    //     let { hp, attack, defense, specialAttack, specialDefense, speed } = '';
-
-    //     pokemonResponse.data.stats.map(stat => {
-    //         switch (stat.stat.name) {
-    //             case 'hp':
-    //                 hp = stat.base_stat;
-    //                 break;
-    //             case 'attack':
-    //                 attack = stat.base_stat;
-    //                 break;
-    //             case 'defense':
-    //                 defense = stat.base_stat;
-    //                 break;
-    //             case 'special-attack':
-    //                 specialAttack = stat.base_stat;
-    //                 break;
-    //             case 'special-defense':
-    //                 specialDefense = stat.base_stat;
-    //                 break;
-    //             case 'speed':
-    //                 speed = stat.base_stat;
-    //                 break;
-    //         }
-    //     })
-
-    //     const types = pokemonResponse.data.types.map(type => type.type.name)
-
-    //     this.setState({ name, imgUrl, pokemonIndex, hp, attack, defense, specialAttack, specialDefense, speed, types })
-    // }
     
 
     return (
@@ -103,26 +74,30 @@ function Pokemon(props) {
                     <div className="display-block-pokemon">
                         <div className="display-block-pokemon_data">
                             <div className="display-block-pokemon_data_img">
-                                <img src={imgUrl}></img>
+                                <img src={imgUrl} alt='nema kartinki'></img>
                             </div>
                             <div className="display-block-pokemon_data_name">
-                                <span className="display-block-pokemon_data_name-idx">{pokeId}</span>
-                                <span className="display-block-pokemon_data_name-name">{props.pokemons.pokemonName.toLowerCase().split(' ').map(letter => letter.charAt(0).toUpperCase() 
-                                + letter.substring(1)).join(' ')}</span>
-                                {props.pokemons.pokemonTypes.map(type => (
+                                <span className="display-block-pokemon_data_name-idx">{pokemonIndex}</span>
+                                <span className="display-block-pokemon_data_name-name">{pokemonName.toLowerCase().split(' ').map(letter => letter.charAt(0).toUpperCase() 
+                                    + letter.substring(1)).join(' ')}</span>
+                                {pokemonTypes.map(type => ( 
                                     <span className="display-block-pokemon_data_name-type" key={type}
-                                    style={{backgroundColor: `#${TypesStyles[type]}`, color: 'white'}}>{type}</span>
+                                    style={{backgroundColor: `#${TypesStyles[type]}`, color: 'white'}}>{type}</span> 
                                 ))}
                             </div>
                         </div>
+                        
                         <div className="display-block-pokemon_stats">
-                            HP: <br />
-                            Attack: <br />
-                            Defense: <br />
-                            Sp Attack: <br />
-                            Sp Defense: <br />
-                            Speed: 
+                            hp: {hp} <br/>
+                            attack: {attack} <br/>
+                            defense: {defense} <br/>
+                            specialAttack: {specialAttack} <br/>
+                            specialDefense: {specialDefense} <br/>
+                            speed: {speed} <br/>
+
                         </div>
+                        <button onClick={() => setPokeId(currentId + 1)}>next</button>
+                        <button onClick={() => setPokeId(currentId - 1)}>prev</button>
                     </div>
                 </div>
             </div>
@@ -139,6 +114,5 @@ export default connect(
     },
     dispatch => ({
         savePokemonName: data => dispatch(savePokemonName(data)),
-        savePokemonTypes: data => dispatch(savePokemonTypes(data))
     })
 )(Pokemon)
