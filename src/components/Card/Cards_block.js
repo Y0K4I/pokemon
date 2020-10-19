@@ -229,12 +229,6 @@ const Block = styled.div`
     align-items: center;
 `
 
-const RopeAnimation = keyframes`
-    0% { height: 150px }
-    50% { height: 300px }
-    100% { height: 150px }
-`
-
 const Rope = styled.div`
     display: flex;
     flex-direction: column;
