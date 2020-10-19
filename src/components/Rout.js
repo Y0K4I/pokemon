@@ -4,7 +4,7 @@ const pokemonIndex = 1;
 
 export function PokeList() {
     const onclick = () => {
-      window.location.assign('http://localhost:3000/#/PokeList/');
+      window.location.assign('https://pokedexbyalex.herokuapp.com/#/PokeList/');
     }
 
     return (<a onClick={() => onclick()}><span>PokeList</span></a>);
