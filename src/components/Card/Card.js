@@ -26,7 +26,7 @@ function Card({name, url, index, ...props}) {
     }, [index])
         
     return (
-        <StyledLink to={URL + `pokemon/${index}`}>
+        <StyledLink to={`pokemon/${index}`}>
             <div className="cards-block_card">
                 <div className="cards-block_card-top">
                     <div className="cards-block_card-top_index">{index}</div>
