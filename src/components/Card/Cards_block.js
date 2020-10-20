@@ -95,7 +95,7 @@ function Cards_block(props) {
         apiGetLimited(props.pokemons.pokemonsLimit, props.pokemons.pokemonsOffset, filterObj).then(result => {
             setPokemons(result.data)
         }).catch(result => {
-            alert("Nema takogo blyat!")
+            alert("No results!")
         })
 
         apiGetLimited(pokemonsCount, props.pokemons.pokemonsOffset, filterObj).then(result => {
@@ -108,7 +108,7 @@ function Cards_block(props) {
             }
             console.log(pokemonsTempCount);
         }).catch(result => {
-            console.log("Nema takogo blyat!");
+            console.log("Nema takogo!");
         })
 
         
