@@ -91,12 +91,17 @@ function Cards_block(props) {
   };
 
   const getNewLimit = () => {
-    setLimit(limit + 5);
-    if (!ropeRef.current.classList.contains("rope-animated")) {
-      ropeRef.current.classList.add("rope-animated");
-      setTimeout(() => {
-        ropeRef.current.classList.remove("rope-animated");
-      }, [1900]);
+    if ((((props.pokemons.pokemonsCurrentPage + 1) * limit) + 10) >= pokemonsCount) {
+        alert("Pokemonov bolshe nema")
+    } else {
+        console.log(((props.pokemons.pokemonsCurrentPage  * limit) + 10));
+        setLimit(limit + 10);
+        if (!ropeRef.current.classList.contains("rope-animated")) {
+          ropeRef.current.classList.add("rope-animated");
+          setTimeout(() => {
+            ropeRef.current.classList.remove("rope-animated");
+          }, [1900]);
+        }
     }
   };
 
@@ -118,26 +123,20 @@ function Cards_block(props) {
   }, []);
 
   useEffect(() => {
-    console.log(
-      props.pokemons.pokemonsCurrentPage,
-      limit,
-      (props.pokemons.pokemonsCurrentPage - 1) * limit
-    )
     apiGetLimited(
       limit,
       (props.pokemons.pokemonsCurrentPage - 1) * limit,
       filterObj
     )
       .then((result) => {
-        setPokemons(result.data.pokemons);
-        setPokemonsTempCount(result.data.count);
-        console.log(result.data.pokemons);
+        setPokemons(result.data.pokemons)
+        setPokemonsTempCount(result.data.count)
+        console.log(result.data.pokemons)
       })
       .catch((result) => {
         alert("Nema takogo!");
       });
 
-    // props.saveOffset(props.pokemons.pokemonsCurrentPage*props.pokemons.pokemonsLimit-props.pokemons.pokemonsLimit)
   }, [
     limit,
     props.pokemons.pokemonsCurrentPage,
@@ -266,7 +265,7 @@ function Cards_block(props) {
       </Blocks>
       <Pagination
         currentPage={props.pokemons.pokemonsCurrentPage}
-        pokemonsPerPage={props.pokemons.pokemonsLimit}
+        pokemonsPerPage={limit}
         totalPokemons={
           !!pokemonsTempCount > 0 ? pokemonsTempCount : pokemonsCount
         }
