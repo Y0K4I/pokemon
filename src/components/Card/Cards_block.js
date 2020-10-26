@@ -161,9 +161,6 @@ function Cards_block(props) {
         ];
       }
     });
-    if (statsFilterArr.length === 0) {
-      alert("Nema takogo!");
-    }
 
     filter = [
       ...filter,
@@ -180,10 +177,7 @@ function Cards_block(props) {
   };
 
   const getNewLimit = () => {
-    if (
-      (props.pokemons.pokemonsCurrentPage + 1) * limit + 5 >=
-      pokemonsCount
-    ) {
+    if ((props.pokemons.pokemonsCurrentPage + 1) * limit + 5 >= pokemonsCount) {
       alert("Pokemonov bolshe nema");
     } else {
       setLimit(limit + 5);
