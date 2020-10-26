@@ -181,13 +181,12 @@ function Cards_block(props) {
 
   const getNewLimit = () => {
     if (
-      (props.pokemons.pokemonsCurrentPage + 1) * limit + 10 >=
+      (props.pokemons.pokemonsCurrentPage + 1) * limit + 5 >=
       pokemonsCount
     ) {
       alert("Pokemonov bolshe nema");
     } else {
-      console.log(props.pokemons.pokemonsCurrentPage * limit + 10);
-      setLimit(limit + 10);
+      setLimit(limit + 5);
       if (!ropeRef.current.classList.contains("rope-animated")) {
         ropeRef.current.classList.add("rope-animated");
         setTimeout(() => {
@@ -195,6 +194,7 @@ function Cards_block(props) {
         }, [1900]);
       }
     }
+    props.saveCurrentPage(1);
   };
 
   const showDrawer = () => {
