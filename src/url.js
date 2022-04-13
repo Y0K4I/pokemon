@@ -1,1 +1,1 @@
-export const URL = `https://pokedexbyalex.herokuapp.com/#/PokeList/`
+export const URL = `https://pokedexbyalex.herokuapp.com/#/PokeList`
